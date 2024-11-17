@@ -100,7 +100,7 @@ const Page = () => {
                                         <h3 className="font-semibold text-gray-700">Telefon aksessuarlari</h3>
                                         <ul className="text-gray-600">
                                             <li><button className="my-2 hover:text-blue-500">Quvvatlagich</button></li>
-                                            <li><button className="hover:text-blue-500">Telefon g'iloflar</button></li>
+                                            <li><button className="hover:text-blue-500">Telefon g`iloflar</button></li>
                                             <li><button className="my-2 hover:text-blue-500">Quloqchinlar</button></li>
                                             <li><button className="hover:text-blue-500">Xotira chiplari</button></li>
                                             <li><button className="my-2 hover:text-blue-500">Ekran himoya oynasi</button></li>
