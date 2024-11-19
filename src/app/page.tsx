@@ -1,11 +1,12 @@
 "use client"
 
 import Image from "next/image";
-import Phones from "@/assets/phones.svg"
-import Phones2 from "@/assets/phones2.svg"
-// import Brands from '@/components/home/brands'
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import Phones from "@/assets/phones.svg"
+import Phones2 from "@/assets/phones2.svg"
+import Brands from '@/components/home/brands'
+import Popular from '@/components/home/popular'
 
 export default function Home() {
   return (
@@ -55,7 +56,9 @@ export default function Home() {
         </div>
       </Carousel>
 
-      {/* <Brands /> */}
+      <Brands />
+      <Popular />
+      <div className="hidden xl:block"><Popular /></div>
     </div>
   );
 }
