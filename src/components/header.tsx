@@ -9,9 +9,8 @@ import { TfiUser } from "react-icons/tfi";
 import { CgShoppingBag, CgSmartHomeRefrigerator } from "react-icons/cg";
 import { GiVacuumCleaner } from "react-icons/gi";
 import { PiScalesLight, PiWashingMachineThin } from "react-icons/pi";
-import { AiOutlineMobile, AiOutlineDesktop} from "react-icons/ai";
+import { AiOutlineMobile, AiOutlineDesktop } from "react-icons/ai";
 import Logo from '@/assets/logo.svg';
-import Link from "next/link";
 
 const Page = () => {
     const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -28,24 +27,24 @@ const Page = () => {
     };
 
     return (
-        <div className="relative">
-            <div className="mt-10 sm:grid sm:grid-flow-col sm:items-center xl:px-32">
-                <div className="sm:w-32 md:w-36 lg:w-64 px-5 grid grid-flow-col items-center">
-                    <Link href="/" className="flex items-center">
+        <div className="relative ">
+            <div className="mt-10 sm:grid sm:grid-flow-col sm:pr-5 sm:items-center xl:px-16">
+                <div className="sm:w-32 md:w-36 lg:w-64 px-5 grid grid-flow-col items-center justify-between">
+                    <div className="flex items-center">
                         <Image className="lg:w-[100%]" src={Logo} width={50} alt="logo" priority />
                         <h2 className="text-2xl font-black text-blue-800 sm:text-3xl md:text-4xl lg:text-6xl">Ashyo</h2>
-                    </Link>
+                    </div>
                     <p className="sm:hidden">+998 (71) 123-45-67</p>
                     <button className="text-[22px] sm:hidden" onClick={toggleSidebar}>
                         <RxHamburgerMenu />
                     </button>
                 </div>
-                
-                <div className="flex items-center gap-3 px-5">
+
+                <div className="flex items-center gap-3 pl-5">
                     <button onClick={toggleDropdown} className="flex items-center bg-blue-600 text-white px-2 py-2 rounded-md lg:px-8 lg:py-4">
                         Kategorya<IoIosArrowDown />
                     </button>
-                    
+
                     {isDropdownOpen && (
                         <div className="absolute left-0 top-24 md:left-10 md:top-16 xl:left-32 xl:top-20 xl:w-10/12 bg-white shadow-lg p-4 z-50">
                             <div className="flex space-x-4">
@@ -107,7 +106,7 @@ const Page = () => {
                         </div>
                     )}
 
-                    <div className="w-[80%] flex justify-between bg-slate-200 rounded-md xl:w-[35vw]">
+                    <div className="w-[80%] flex justify-between bg-slate-200 rounded-md xl:w-[600px]">
                         <input className="bg-transparent p-2 outline-none lg:px-4 lg:py-4" type="text" placeholder="What are you looking for?" />
                         <button className="flex justify-center items-center bg-blue-600 text-white w-[20%] py-3 rounded-md lg:text-xl">
                             <IoIosSearch />
@@ -115,11 +114,11 @@ const Page = () => {
                     </div>
                 </div>
 
-                <div className="hidden sm:flex justify-evenly gap-1">
-                    <button className="bg-slate-200 text-[25px] p-2 rounded-md hidden md:block lg:py-4 lg:px-4"><PiScalesLight /></button>
-                    <button className="bg-slate-200 text-[25px] p-2 rounded-md lg:py-4 lg:px-4"><IoMdHeartEmpty /></button>
-                    <button className="bg-slate-200 text-[25px] p-2 rounded-md hidden md:block lg:py-4 lg:px-4"><CgShoppingBag /></button>
-                    <button className="bg-slate-200 text-[25px] p-2 rounded-md lg:py-4 lg:px-4"><TfiUser /></button>
+                <div className="hidden sm:flex justify-center gap-2 xl:justify-normal ">
+                    <button className="bg-slate-200 text-[20px] p-2 rounded-md hidden md:block lg:py-4 lg:px-4"><PiScalesLight /></button>
+                    <button className="bg-slate-200 text-[20px] p-2 rounded-md lg:py-4 lg:px-4"><IoMdHeartEmpty /></button>
+                    <button className="bg-slate-200 text-[20px] p-2 rounded-md hidden md:block lg:py-4 lg:px-4"><CgShoppingBag /></button>
+                    <button className="bg-slate-200 text-[20px] p-2 rounded-md lg:py-4 lg:px-4"><TfiUser /></button>
                 </div>
             </div>
 
@@ -157,6 +156,19 @@ const Page = () => {
                     </div>
                 </div>
             )}
+            <div className="hidden lg:block xl:px-24">
+                <ul className="flex justify-evenly mt-5 ">
+                    <button className="hover:text-blue-800">Aksiyalar</button>
+                    <button className="hover:text-blue-800">Smartfonlar</button>
+                    <button className="hover:text-blue-800">Noutbooklar</button>
+                    <button className="hover:text-blue-800">Kondetsionerlar</button>
+                    <button className="hover:text-blue-800">Telivizorlar</button>
+                    <button className="hover:text-blue-800">Muzlatgichlar</button>
+                    <button className="hover:text-blue-800">Kiryuvish mashinalari</button>
+                    <button className="hover:text-blue-800">Telivizorlar</button>
+                    <button className="hover:text-blue-800">Kiryuvish mashinalari</button>
+                </ul>
+            </div>
         </div>
     );
 };

@@ -7,7 +7,9 @@ import Phones from "@/assets/phones.svg"
 import Phones2 from "@/assets/phones2.svg"
 import Brands from '@/components/home/brands'
 import Popular from '@/components/home/popular'
+import Sale from '@/components/home/sale-products'
 import Techno from '@/components/home/technologies'
+import Music from '@/components/home/music'
 
 export default function Home() {
   return (
@@ -61,6 +63,9 @@ export default function Home() {
       <Popular />
       <div className="hidden xl:block"><Popular /></div>
       <Techno/>
+      <Sale/>
+      <Music/>
+      <Popular />
     </div>
   );
 }
