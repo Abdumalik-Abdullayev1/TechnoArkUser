@@ -52,7 +52,7 @@ const Page = () => {
                     </div>
                 </div>
             </div>
-            <div className='lg:px-20 lg:grid grid-cols-3 gap-32 my-16'>
+            <div className='hidden lg:px-20 lg:grid grid-cols-3 gap-32 my-16'>
                 <div className='w-[500px]'>
                     <h2 className='text-xl font-bold'>Bizning ijtimoiy tarmoqlarda</h2>
                     <div className='flex flex-wrap gap-2 text-xl mt-5'>

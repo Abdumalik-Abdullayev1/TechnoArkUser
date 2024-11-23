@@ -6,7 +6,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import Phones from "@/assets/phones.svg"
 import Phones2 from "@/assets/phones2.svg"
 import Brands from '@/components/home/brands'
-import Popular from '@/components/home/popular'
+import Popular from '@/components/home/products'
 import Sale from '@/components/home/sale-products'
 import Techno from '@/components/home/technologies'
 import Music from '@/components/home/music'
