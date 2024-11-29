@@ -40,7 +40,7 @@ const Page = () => {
                     </button>
                 </div>
 
-                <div className="flex items-center gap-3 pl-5">
+                <div className="flex items-center gap-2 px-3">
                     <button onClick={toggleDropdown} className="flex items-center bg-blue-600 text-white px-2 py-2 rounded-md lg:px-8 lg:py-4">
                         Kategorya<IoIosArrowDown />
                     </button>
@@ -106,8 +106,8 @@ const Page = () => {
                         </div>
                     )}
 
-                    <div className="w-[80%] flex justify-between bg-slate-200 rounded-md xl:w-[600px]">
-                        <input className="bg-transparent p-2 outline-none lg:px-4 lg:py-4" type="text" placeholder="What are you looking for?" />
+                    <div className="w-[70%] flex justify-between bg-slate-200 rounded-md xl:w-[600px]">
+                        <input className="bg-transparent p-2 outline-none lg:px-3 lg:py-4" type="text" placeholder="What are you looking for?" />
                         <button className="flex justify-center items-center bg-blue-600 text-white w-[20%] py-3 rounded-md lg:text-xl">
                             <IoIosSearch />
                         </button>
