@@ -4,24 +4,17 @@ import { useEffect, useState } from 'react';
 import { LiaStoreAltSolid } from "react-icons/lia";
 import { PiTruckDuotone, PiClock } from "react-icons/pi";
 import Products from '@/components/home/products'
-import { ProductData } from '@/types/Product';
 
 const Page = () => {
   const { id } = useParams();
-  const [data, setData] = useState<ProductData>({
-    id: '',
-    name: '',
-    price: 0,
-    images: [' '],
-  });
+  const [data, setData] = useState<any>(null);
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
         const response = await fetch(`https://texnoark.ilyosbekdev.uz/products/${id}`);
         const data = await response.json();
-        const productsData = data.data.products as ProductData
-        setData(productsData);
+        setData(data);
       } catch (error) {
         console.error('Error fetching product:', error);
       }
@@ -35,27 +28,27 @@ const Page = () => {
   return (
     <>
       <div className='px-5 xl:px-24'>
-        <h1 className='text-black py-5 text-xl font-bold xl:text-4xl'>{data?.name}</h1>
+        <h1 className='text-black py-5 text-xl font-bold xl:text-4xl'>{data?.data?.product?.name}</h1>
         <div className='flex'>
           <div className='flex gap-2 w-full xl:w-[80%]'>
             <div className='hidden w-[20%] xl:flex xl:flex-col justify-around gap-1'>
-              <img src={data?.images?.[0]} alt="product-main" className="w-full" />
-              <img src={data?.images?.[0]} alt="product-main" className="w-full" />
-              <img src={data?.images?.[0]} alt="product-main" className="w-full" />
-              <img src={data?.images?.[0]} alt="product-main" className="w-full" />
+              <img src={data?.data?.product?.images?.[0]} alt="product-main" className="w-full" />
+              <img src={data?.data?.product?.images?.[0]} alt="product-main" className="w-full" />
+              <img src={data?.data?.product?.images?.[0]} alt="product-main" className="w-full" />
+              <img src={data?.data?.product?.images?.[0]} alt="product-main" className="w-full" />
             </div>
-            <span className='w-[100%] flex flex-col justify-center items-center xl:w-[80%]'><img src={data?.images?.[0]} alt="product-main" className="xl:w-full md:w-[60%]" /></span>
+            <span className='w-[100%] flex flex-col justify-center items-center xl:w-[80%]'><img src={data?.data?.product?.images?.[0]} alt="product-main" className="xl:w-full md:w-[60%]" /></span>
             <div className='w-[30%] sm:w-[25%] md:w-[18%] flex flex-col gap-1 xl:hidden'>
-              <img src={data?.images?.[0]} alt="product-main" className="w-full" />
-              <img src={data?.images?.[0]} alt="product-main" className="w-full" />
-              <img src={data?.images?.[0]} alt="product-main" className="w-full" />
-              <img src={data?.images?.[0]} alt="product-main" className="w-full" />
+              <img src={data?.data?.product?.images?.[0]} alt="product-main" className="w-full" />
+              <img src={data?.data?.product?.images?.[0]} alt="product-main" className="w-full" />
+              <img src={data?.data?.product?.images?.[0]} alt="product-main" className="w-full" />
+              <img src={data?.data?.product?.images?.[0]} alt="product-main" className="w-full" />
             </div>
           </div>
           <div className='hidden xl:block xl:mt-20'>
             <div className='flex gap-2 items-end'>
               <span className='text-xl flex'>Narxi</span>
-              <span className='text-3xl font-bold'>{data?.price}</span>
+              <span className='text-3xl font-bold'>{data?.data?.product?.price}</span>
               <span className='text-xl'>UZS</span>
             </div>
             <div className='bg-slate-200 flex justify-center py-5 rounded-lg mt-10'>
@@ -87,7 +80,7 @@ const Page = () => {
             <div>
               <div className='flex gap-2 items-end mt-5 sm:mt-0'>
                 <span className='text-xl flex'>Narxi</span>
-                <span className='text-3xl font-bold'>{data?.price}</span>
+                <span className='text-3xl font-bold'>{data?.data?.product?.price}</span>
                 <span className='text-xl'>UZS</span>
               </div>
               <div className='mt-5'>

@@ -8,7 +8,6 @@ import { useEffect, useState } from 'react';
 const Product: any = () => {
     const { data } = useFetch('https://texnoark.ilyosbekdev.uz/products/search');
     const [likedProducts, setLikedProducts] = useState<{ [key: string]: boolean }>({});
-    console.log(data, "data malumoti");
 
 
     useEffect(() => {
