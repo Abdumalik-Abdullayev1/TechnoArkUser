@@ -32,7 +32,7 @@ const Product: any = () => {
         <div>
             <h2 className="font-bold mt-10 text-[22px] px-5 mb-5 xl:px-20">Most popular product</h2>
             <div className="grid grid-cols-2 gap-2 px-5 sm:grid-cols-3 lg:grid-cols-4 xl:gap-5 xl:px-20">
-                {data?.products?.slice(0, 4).map((item: any) => (
+                {data?.products?.slice(4, 8).map((item: any) => (
                     <div key={item?.id} className="product-card relative">
                         <div>
                             <div className="relative h-[50vh] bg-slate-200 flex justify-center items-center object-contain rounded-lg">
@@ -42,7 +42,7 @@ const Product: any = () => {
                                 >
                                     {likedProducts[item?.id] ? <FcLike /> : <FcLikePlaceholder />}
                                 </button>
-                                <Link href={`/products/${item?.id}`}><img src={item?.images?.[0]}  alt="card" className="w-full" /></Link>
+                                <Link href={`products/${item?.id}`}><img src={item?.images?.[0]}  alt="card" className="w-full" /></Link>
                                 <span className="absolute top-2 right-2 sm:text-[22px]">{ }</span>
                             </div>
                             <p className="text-sm font-bold sm:text-xl mt-2">{item?.name}</p>

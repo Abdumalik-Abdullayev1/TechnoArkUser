@@ -11,6 +11,7 @@ import { GiVacuumCleaner } from "react-icons/gi";
 import { PiScalesLight, PiWashingMachineThin } from "react-icons/pi";
 import { AiOutlineMobile, AiOutlineDesktop } from "react-icons/ai";
 import Logo from '@/assets/logo.svg';
+import Link from "next/link";
 
 const Page = () => {
     const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -118,7 +119,7 @@ const Page = () => {
                     <button className="bg-slate-200 text-[20px] p-2 rounded-md hidden md:block lg:py-4 lg:px-4"><PiScalesLight /></button>
                     <button className="bg-slate-200 text-[20px] p-2 rounded-md lg:py-4 lg:px-4"><IoMdHeartEmpty /></button>
                     <button className="bg-slate-200 text-[20px] p-2 rounded-md hidden md:block lg:py-4 lg:px-4"><CgShoppingBag /></button>
-                    <button className="bg-slate-200 text-[20px] p-2 rounded-md lg:py-4 lg:px-4"><TfiUser /></button>
+                    <Link href="auth/login" className="bg-slate-200 text-[20px] p-2 rounded-md lg:py-4 lg:px-4"><TfiUser /></Link>
                 </div>
             </div>
 
@@ -126,7 +127,7 @@ const Page = () => {
                 <div className="fixed inset-0 z-50 flex">
                     <div className="fixed inset-0 bg-black opacity-50" onClick={closeSidebar}></div>
                     <div className="relative w-64 h-full bg-white shadow-lg z-50 p-4">
-                        <button className="text-xl mb-4" onClick={closeSidebar}>Close</button>
+                        <button className="text-xl mb-4 font-extralight text-blue-800" onClick={closeSidebar}>Ashyo</button>
                         <ul className="space-y-4">
                             <li className="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded-md">
                                 <AiOutlineMobile />
@@ -152,6 +153,10 @@ const Page = () => {
                                 <GiVacuumCleaner />
                                 <span>Chang utgichlar</span>
                             </li>
+                            <Link href="auth/login" className="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded-md">
+                                <button><TfiUser /></button>
+                                <span>Profile</span>
+                            </Link>
                         </ul>
                     </div>
                 </div>

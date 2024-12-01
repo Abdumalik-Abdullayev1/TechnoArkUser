@@ -7,6 +7,8 @@ import Phones from "@/assets/phones.svg"
 import Phones2 from "@/assets/phones2.svg"
 import Brands from '@/components/home/brands'
 import Popular from '@/components/home/products'
+import Products from '@/components/home/products-second'
+import AllProducts from '@/components/home/products-third'
 import Sale from '@/components/home/sale-products'
 import Techno from '@/components/home/technologies'
 import Music from '@/components/home/music'
@@ -61,11 +63,11 @@ export default function Home() {
 
       <Brands />
       <Popular />
-      <div className="hidden xl:block"><Popular /></div>
+      <Products/>
       <Techno/>
       <Sale/>
       <Music/>
-      <Popular />
+      <AllProducts />
     </div>
   );
 }
