@@ -3,74 +3,117 @@ import Link from 'next/link'
 import React, { useState } from 'react'
 import Map from '@/assets/map.svg'
 import Image from 'next/image'
+import { authReques } from '@/service/page'
 import { useRouter } from 'next/navigation'
+import {
+    FaFacebook,
+    FaYoutube,
+    FaTelegram,
+    FaTwitter,
+    FaInstagram,
+} from "react-icons/fa6";
+import LoginImg from '@/assets/validation.jpg'
 
-
+type FieldType = {
+    first_name: string,
+    last_name: string,
+    email: string,
+    phone_number: string,
+    password: string
+}
 
 const Page = () => {
-    const [register, setRegister] = useState({
+    const router = useRouter()
+    const [values, setValues] = useState<FieldType>({
         first_name: '',
         last_name: '',
         email: '',
         phone_number: '',
         password: ''
-    })
-    const router = useRouter()
+    });
 
-    const handleRegister = async (event: React.FormEvent) => {
+    const handleRegister: any = async (event: any) => {
         event.preventDefault()
 
         try {
-            const res = await fetch("https://texnoark.ilyosbekdev.uz/auth/user/sign-up", {
-                method: 'POST',
-                headers: { 'Content-type': 'application/json' },
-                body: JSON.stringify(register)
-            });
-            if (!res.ok) {
-                const { message } = await res.json();
-                throw new Error(message || 'Register failed');
+            const res: any = await authReques.sign_up(values)
+            console.log(res);
+            if (res.status === 201) {
+                router.push('/auth/login')
             }
-            const data = await res.json();
-            console.log("Registration successful:", data);
-            // router.push('auth/login')
-
-        } catch (error: any) {
-            console.error("Error during registration:", error.message || error);
+        } catch (err) {
+            console.log("error");
         }
-    }
+    };
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setValues((prevValues) => ({
+            ...prevValues,
+            [name]: value,
+        }));
+    };
 
     return (
         <div className='px-4'>
-            <h2 className='font-bold mt-4 text-2xl md:px-10 lg:px-20 sm:text-3xl'>Ro’yhatdan o’tish</h2>
+            <h2 className='font-bold mt-4 xl:mt-10 text-2xl md:px-10 lg:px-20 xl:text-3xl'>Ro’yhatdan o’tish</h2>
             <div className='w-full mt-3 md:px-10 lg:px-20'>
                 <Link href="login"><button className='w-[50%] py-2 rounded-md shadow-md'>Kirish</button></Link>
                 <button className='bg-slate-200 w-[50%] rounded-md py-2 shadow-xl'>Ro’yhatdan o’tish</button>
             </div>
-            <div className='mt-3'>
-                <form onSubmit={handleRegister} className=' sm:grid grid-cols-2 gap-4 md:px-10 lg:px-20 xl:grid-cols-3'>
+            <div className='sm:flex gap-2 mt-5 px-10 items-center lg:px-20'>
+                <div className='hidden sm:block xl:w-[50%]'>
+                    <Image className='w-full' src={LoginImg} alt='LoginImg' width={500} />
+                </div>
+                <form onSubmit={handleRegister} className='sm:w-[50%] md:px-5 lg:px-16 '>
                     <div>
                         <h3 className='text-slate-400 mt-1'>First name</h3>
-                        <input type="text" placeholder='Enter your name' value={register.first_name} onChange={(event) => setRegister({ ...register, first_name: event.target.value })} className='w-full p-2 border-b-2 outline-none border-black' />
+                        <input type="text"
+                            placeholder='Enter your name'
+                            name="first_name"
+                            value={values.first_name}
+                            onChange={handleInputChange}
+                            className='w-full p-2 border-b-2 outline-none border-black' />
                     </div>
                     <div>
                         <h3 className='text-slate-400 mt-1'>Last name</h3>
-                        <input type="text" placeholder='Enter your surname' value={register.last_name} onChange={(event) => setRegister({ ...register, last_name: event.target.value })} className='w-full p-2 border-b-2 outline-none border-black' />
+                        <input type="text"
+                            placeholder='Enter your lastname'
+                            name="last_name"
+                            value={values.last_name}
+                            onChange={handleInputChange}
+                            className='w-full p-2 border-b-2 outline-none border-black' />
                     </div>
                     <div>
                         <h3 className='text-slate-400 mt-1'>Email</h3>
-                        <input type="email" placeholder='Enter your Email' value={register.email} onChange={(event) => setRegister({ ...register, email: event.target.value })} className='w-full p-2 border-b-2 outline-none border-black' />
+                        <input type="email"
+                            placeholder='Enter your Email'
+                            name='email'
+                            value={values.email}
+                            onChange={handleInputChange}
+                            className='w-full p-2 border-b-2 outline-none border-black' />
                     </div>
                     <div>
                         <h3 className='text-slate-400 mt-1'>Phone number</h3>
-                        <input type="number" placeholder='Enter your phone' value={register.phone_number} onChange={(event) => setRegister({ ...register, phone_number: event.target.value })} className='w-full spin-hidden p-2 border-b-2 outline-none border-black' />
+                        <input type="tel"
+                            placeholder='Enter your phone'
+                            name='phone_number'
+                            value={values.phone_number}
+                            onChange={handleInputChange}
+                            className='w-full spin-hidden p-2 border-b-2 outline-none border-black' />
                     </div>
                     <div>
                         <h3 className='text-slate-400 mt-1'>Password</h3>
-                        <input type="password" placeholder='Enter new password' value={register.password} onChange={(event) => setRegister({ ...register, password: event.target.value })} className='w-full p-2 border-b-2 outline-none border-black' />
+                        <input type="password"
+                            placeholder='Enter new password'
+                            name='password'
+                            value={values.password}
+                            onChange={handleInputChange}
+                            className='w-full p-2 border-b-2 outline-none border-black' />
                     </div>
                     <div className='hidden sm:block'>
                         <h3 className='text-slate-400 mt-1'>Password</h3>
-                        <input type="password" placeholder='Confirm password' className='w-full p-2 border-b-2 outline-none border-black' />
+                        <input type="password" placeholder='Confirm password'
+                            className='w-full p-2 border-b-2 outline-none border-black' />
                     </div>
                     <button
                         type="submit"
@@ -85,25 +128,35 @@ const Page = () => {
                 <button className='bg-slate-200 text-blue-700 rounded-md px-8 py-2'>Login orqali</button>
             </div>
             <div className='w-full mt-5 relative'>
-                <div className='w-[40%] h-[85%] bg-white absolute top-0 left-5 my-3 p-1'>
-                    <div>
-                        <h2 className='font-extrabold text-[8px]'>OOO “Ashyo”</h2>
-                        <div className='text-[8px]'>
+                <div className='w-[40%] h-[90%] bg-white absolute top-0 left-5 my-1 p-1 sm:p-5 xl:my-5'>
+                    <div className='lg:flex flex-col gap-1 xl:gap-6'>
+                        <h2 className='font-extrabold text-[8px] sm:text-[12px] lg:text-[17px] xl:text-[22px]'>OOO “Ashyo”</h2>
+                        <div className='text-[8px] sm:text-[12px] lg:text-[17px] xl:text-[22px]'>
                             <span>Telfon raqam;</span>
                             <span>+998 71 123 45 56</span>
                         </div>
-                        <div className='text-[8px]'>
+                        <div className='text-[8px] sm:text-[12px] lg:text-[17px] xl:text-[22px]'>
                             <span>Elektron pochta;</span>
-                            <span className='text-blue-800 font-semibold pl-1'>ashyo@gmail.com</span>
+                            <span className='text-blue-800 font-semibold pl-1'>shyo@gmail.com</span>
                         </div>
-                        <div className='text-[8px]'>
+                        <div className='text-[8px] sm:text-[12px] lg:text-[17px] xl:text-[22px]'>
                             <p>Manzilimiz;</p>
-                            <span className='font-bold text-[8px]'>100052, O‘zbekiston Respublikasi, Toshkent shahri, Bodomzor yo‘li 1-tor ko‘chasi, 72
+                            <span className='font-bold text-[8px] sm:text-[12px] lg:text-[17px] xl:text-[22px]'>100052, O‘zbekiston Respublikasi, Toshkent shahri, Bodomzor yo‘li 1-tor ko‘chasi, 72
                             </span>
+                        </div>
+                        <div className='hidden md:block'>
+                            <p>Ijtimoiy tarmoqlarimiz</p>
+                            <div className='flex flex-wrap gap-2 text-[12px] lg:text-[17px] xl:text-[22px] xl:mt-2'>
+                                <button className='bg-slate-200 text-2xl py-2 px-2 xl:px-5 rounded-md'><FaFacebook /></button>
+                                <button className='bg-slate-200 text-2xl py-2 px-2 xl:px-5 rounded-md'><FaYoutube /></button>
+                                <button className='bg-slate-200 text-2xl py-2 px-2 xl:px-5 rounded-md'><FaTelegram /></button>
+                                <button className='bg-slate-200 text-2xl py-2 px-2 xl:px-5 rounded-md'><FaTwitter /></button>
+                                <button className='bg-slate-200 text-2xl py-2 px-2 xl:px-5 rounded-md'><FaInstagram /></button>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <Image src={Map} alt='MapImage' width={1500} />
+                <Image src={Map} alt='MapImage' width={1500} priority />
             </div>
         </div>
     )

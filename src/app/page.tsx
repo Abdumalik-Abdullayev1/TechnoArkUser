@@ -10,9 +10,12 @@ import Popular from '@/components/home/products'
 import Products from '@/components/home/products-second'
 import AllProducts from '@/components/home/products-third'
 import Sale from '@/components/home/sale-products'
+import dynamic from "next/dynamic";
 import Techno from '@/components/home/technologies'
-import Music from '@/components/home/music'
 
+const Music = dynamic(()=> import('@/components/home/music'), {
+  loading: () => <p>Loading...</p>
+})
 export default function Home() {
   return (
     <div>
