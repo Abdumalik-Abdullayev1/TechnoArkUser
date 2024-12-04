@@ -98,7 +98,7 @@ const Page = () => {
       </div>
       <div className='w-full mt-5 relative'>
         <div className='w-[40%] h-[90%] bg-white absolute top-0 left-5 my-1 p-1 sm:p-5 xl:my-5'>
-          <div className='lg:flex flex-col gap-1 xl:gap-6'>
+          <div className='lg:flex flex-col gap-1 lg:gap-4'>
             <h2 className='font-extrabold text-[8px] sm:text-[12px] lg:text-[17px] xl:text-[22px]'>OOO “Ashyo”</h2>
             <div className='text-[8px] sm:text-[12px] lg:text-[17px] xl:text-[22px]'>
               <span>Telfon raqam;</span>

@@ -42,7 +42,7 @@ const Page = () => {
                 </div>
 
                 <div className="flex items-center gap-2 px-3">
-                    <button onClick={toggleDropdown} className="flex items-center bg-blue-600 text-white px-2 py-2 rounded-md lg:px-8 lg:py-4">
+                    <button onClick={toggleDropdown} className="flex items-center bg-blue-600 text-white px-2 py-2 rounded-md lg:px-6 lg:py-4">
                         Kategorya<IoIosArrowDown />
                     </button>
 
@@ -107,7 +107,7 @@ const Page = () => {
                         </div>
                     )}
 
-                    <div className="w-[70%] flex justify-between bg-slate-200 rounded-md xl:w-[600px]">
+                    <div className="w-[70%] flex justify-between bg-slate-200 rounded-md lg:w-[350px] xl:w-[450px] 2xl:w-[600px]">
                         <input className="bg-transparent p-2 outline-none lg:px-3 lg:py-4" type="text" placeholder="What are you looking for?" />
                         <button className="flex justify-center items-center bg-blue-600 text-white w-[20%] py-3 rounded-md lg:text-xl">
                             <IoIosSearch />
@@ -115,9 +115,9 @@ const Page = () => {
                     </div>
                 </div>
 
-                <div className="hidden sm:flex justify-center gap-2 xl:justify-normal ">
+                <div className="hidden sm:flex justify-center gap-2 md:justify-start xl:justify-normal ">
                     <button className="bg-slate-200 text-[20px] p-2 rounded-md hidden md:block lg:py-4 lg:px-4"><PiScalesLight /></button>
-                    <Link href="/likes" className="bg-slate-200 text-[20px] p-2 rounded-md lg:py-4 lg:px-4"><IoMdHeartEmpty /></Link>
+                    <Link href="/favourite" className="bg-slate-200 text-[20px] p-2 rounded-md lg:py-4 lg:px-4"><IoMdHeartEmpty /></Link>
                     <button className="bg-slate-200 text-[20px] p-2 rounded-md hidden md:block lg:py-4 lg:px-4"><CgShoppingBag /></button>
                     <Link href="/auth/login" className="bg-slate-200 text-[20px] p-2 rounded-md lg:py-4 lg:px-4"><TfiUser /></Link>
                 </div>

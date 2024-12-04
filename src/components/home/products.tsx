@@ -4,45 +4,87 @@ import { CgShoppingBag } from 'react-icons/cg';
 import { FcLikePlaceholder, FcLike } from "react-icons/fc";
 import useFetch from '@/app/hooks/get-data';
 import { useEffect, useState } from 'react';
+import { ProductData } from '@/types/page';
+import { useRouter } from 'next/navigation';
 
-const Product: any = () => {
+const Product = () => {
     const { data } = useFetch('https://texnoark.ilyosbekdev.uz/products/search');
-    const [likedProducts, setLikedProducts] = useState<{ [key: string]: boolean }>({});
-
+    const [likedProducts, setLikedProducts] = useState<ProductData[]>([]);
+    const router = useRouter()
 
     useEffect(() => {
-        const savedLikes = localStorage.getItem('likedProducts');
-        if (savedLikes) {
-            setLikedProducts(JSON.parse(savedLikes));
+        const token = localStorage.getItem('token')
+        if (token) {
+            const savedLikes = localStorage.getItem('likedProducts');
+            if (savedLikes) {
+                setLikedProducts(JSON.parse(savedLikes));
+            }
         }
     }, []);
-    const toggleLike = (id: string) => {
-        let updatedLikes: { [key: string]: boolean } = {};
-        if (likedProducts[id]) {
-            updatedLikes = { ...likedProducts };
-            delete updatedLikes[id];
-        } else {
-            updatedLikes = { ...likedProducts, [id]: true };
+
+    const toggleLike = async (item: ProductData) => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            router.push('/auth/login')
+            return;
         }
+        let updatedLikes: ProductData[];
+        const isLiked = likedProducts.some(product => product.id === item.id);
+
+        if (isLiked) {
+            updatedLikes = likedProducts.filter(product => product.id !== item.id);
+        } else {
+            updatedLikes = [...likedProducts, item];
+        }
+
         setLikedProducts(updatedLikes);
         localStorage.setItem('likedProducts', JSON.stringify(updatedLikes));
+
+        try {
+            const response = await fetch('https://texnoark.ilyosbekdev.uz/likes/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                },
+                body: JSON.stringify({
+                    product_id: item.id,
+                    liked: !isLiked,
+                }),
+            });
+            console.log(response, "like resp");
+
+            if (!response.ok) {
+                const { message } = await response.json();
+                throw new Error(message || 'Failed to update like');
+            }
+
+            const likedProducts = JSON.parse(localStorage.getItem('likedProducts') || '[]');
+            if (!likedProducts.includes(item.id)) {
+                likedProducts.push(item.id);
+                localStorage.setItem('likedProducts', JSON.stringify(likedProducts));
+            }
+            console.log('Like status updated successfully');
+        } catch (error) {
+            console.error('Error updating like:', error);
+        }
     };
 
     return (
         <div>
             <h2 className="font-bold mt-10 text-[22px] px-5 mb-5 xl:px-20">Most popular product</h2>
             <div className="grid grid-cols-2 gap-2 px-5 sm:grid-cols-3 lg:grid-cols-4 xl:gap-5 xl:px-20">
-                {data?.products?.slice(0, 4).map((item: any) => (
+                {data?.products?.slice(0, 4).map((item: ProductData) => (
                     <div key={item?.id} className="product-card relative">
                         <div>
                             <div className="relative h-[50vh] bg-slate-200 flex justify-center items-center object-contain rounded-lg">
                                 <button
-                                    onClick={() => toggleLike(item?.id)}
+                                    onClick={() => toggleLike(item)}
                                     className="absolute top-5 right-5 text-2xl"
                                 >
-                                    {likedProducts[item?.id] ? <FcLike /> : <FcLikePlaceholder />}
+                                    {likedProducts.some(product => product.id === item.id) ? <FcLike /> : <FcLikePlaceholder />}
                                 </button>
-                                <Link href={`/products/${item?.id}`}><img src={item?.images?.[0]}  alt="card" className="w-full" /></Link>
+                                <Link href={`/products/${item?.id}`}><img src={item?.images?.[0]} alt="card" className="w-full" /></Link>
                                 <span className="absolute top-2 right-2 sm:text-[22px]">{ }</span>
                             </div>
                             <p className="text-sm font-bold sm:text-xl mt-2">{item?.name}</p>
