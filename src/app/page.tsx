@@ -1,18 +1,23 @@
 "use client"
 
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import Phones from "@/assets/phones.svg"
 import Phones2 from "@/assets/phones2.svg"
-import Brands from '@/components/home/brands'
-import Popular from '@/components/home/products'
-import Products from '@/components/home/products-second'
-import AllProducts from '@/components/home/products-third'
-import Sale from '@/components/home/sale-products'
-import dynamic from "next/dynamic";
-import Techno from '@/components/home/technologies'
-
+const Brands = dynamic(()=> import('@/components/home/brands'), {
+  loading: () => <p>Loading...</p>})
+const Popular = dynamic(()=> import('@/components/home/products'), {
+  loading: () => <p>Loading...</p>})
+const Sale = dynamic(()=> import('@/components/home/sale-products'), {
+  loading: () => <p>Loading...</p>})
+const Products = dynamic(()=> import('@/components/home/products-second'), {
+  loading: () => <p>Loading...</p>})
+const AllProducts = dynamic(()=> import('@/components/home/products-third'), {
+  loading: () => <p>Loading...</p>})
+const Techno = dynamic(()=> import('@/components/home/technologies'), {
+  loading: () => <p>Loading...</p>})
 const Music = dynamic(()=> import('@/components/home/music'), {
   loading: () => <p>Loading...</p>
 })

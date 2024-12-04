@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { ProductData } from "@/types/page";
+import { CgShoppingBag } from 'react-icons/cg';
 import Link from "next/link";
 
 const Page = () => {
@@ -35,7 +36,7 @@ const Page = () => {
     if (error) {
         return (
             <div className="flex flex-col items-center gap-3 lg:gap-4">
-                <p className="text-red-500 font-semibold text-xl my-10">{error}</p>
+                <p className="text-red-500 font-semibold text-xl my-10 text-center">{error}</p>
                 <Link
                     href={"/"}
                     className="w-[130px] h-[40px] md:w-[170px] flex items-center justify-center bg-blue-600 transition-all hover:bg-blue-500 rounded-md text-white"
@@ -47,15 +48,28 @@ const Page = () => {
     }
 
     return (
-        <div className="container mt-5">
-            <h1 className="text-[20px] lg:text-[30px] font-bold mb-5">Favourites Products</h1>
-            <hr />
-            <br />
-            <div className="grid grid-cols-1 gap-3 min-[450px]:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="container mt-5 xl:px-20">
+            <h1 className="px-10 text-[20px] lg:text-[30px] font-bold mb-5 xl:px-3 xl:text-4xl">Precious Products</h1>
+            <div className="grid grid-cols-2 gap-2 px-5 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 xl:gap-5 xl:px-3">
                 {likedProducts.map((item) => (
-                    <div key={item.id}>
-                        <p>{item.name}</p>
-                        <img src={item?.images?.[0]} alt="liked" />
+                    <div key={item?.id} className="product-card relative">
+                        <div>
+                            <div className="relative h-[50vh] bg-slate-200 flex justify-center items-center object-contain rounded-lg">
+                                <Link href={`/products/${item?.id}`}><img src={item?.images?.[0]} alt="card" className="w-full" /></Link>
+                            </div>
+                            <p className="text-sm font-bold sm:text-xl mt-2">{item?.name}</p>
+                            <div className="xl:flex xl:items-center xl:justify-between">
+                                <div className="flex justify-between pr-5 items-center py-3 xl:flex-col xl:items-start xl:w-full">
+                                    <p className="text-md font-bold sm:text-[18px]">${item?.price}</p>
+                                </div>
+                                <div className="flex gap-1 h-full">
+                                    <button className="flex items-center gap-1 bg-blue-800 px-5 py-2 text-white lg:px-10 rounded-md">
+                                        Savatcha
+                                        <CgShoppingBag />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 ))}
             </div>

@@ -118,7 +118,7 @@ const Page = () => {
                 <div className="hidden sm:flex justify-center gap-2 md:justify-start xl:justify-normal ">
                     <button className="bg-slate-200 text-[20px] p-2 rounded-md hidden md:block lg:py-4 lg:px-4"><PiScalesLight /></button>
                     <Link href="/favourite" className="bg-slate-200 text-[20px] p-2 rounded-md lg:py-4 lg:px-4"><IoMdHeartEmpty /></Link>
-                    <button className="bg-slate-200 text-[20px] p-2 rounded-md hidden md:block lg:py-4 lg:px-4"><CgShoppingBag /></button>
+                    <Link href="/cart" className="bg-slate-200 text-[20px] p-2 rounded-md hidden md:block lg:py-4 lg:px-4"><CgShoppingBag /></Link>
                     <Link href="/auth/login" className="bg-slate-200 text-[20px] p-2 rounded-md lg:py-4 lg:px-4"><TfiUser /></Link>
                 </div>
             </div>
@@ -157,9 +157,13 @@ const Page = () => {
                                 <button><TfiUser /></button>
                                 <span>Profile</span>
                             </Link>
-                            <Link href="/likes" className="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded-md">
+                            <Link href="/favourite" className="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded-md">
                                 <button><IoMdHeartEmpty /></button>
                                 <span>Liked Products</span>
+                            </Link>
+                            <Link href="/cart" className="flex items-center space-x-2 p-2 hover:bg-gray-200 rounded-md">
+                                <button><CgShoppingBag /></button>
+                                <span>Cart</span>
                             </Link>
                         </ul>
                     </div>

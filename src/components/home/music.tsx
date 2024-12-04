@@ -5,7 +5,7 @@ import Headphones from '@/assets/pngwing.svg'
 
 const Page = () => {
     return (
-        <div className='px-5 xl:px-20'>
+        <div className='px-5 xl:px-20 mt-16'>
             <div className='bg-[rgb(40,40,40)] rounded-lg flex items-center sm:gap-10 lg:gap-20'>
                 <div className='md:pl-20'>
                     <Image src={Headphones} width={300} alt='Headphones' />
