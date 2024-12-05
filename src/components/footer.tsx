@@ -16,8 +16,8 @@ const Page = () => {
             <div className='px-5 lg:hidden  '>
                 <h2 className='font-semibold text-[18px] my-10'>Mobil ilovani yuklab oling</h2>
                 <div className='flex items-center gap-5 '>
-                    <button className='flex items-center gap-1 bg-slate-200 px-5 py-2 text-xl rounded-md'><FaAppStoreIos /> App Store</button>
-                    <button className='flex items-center gap-1 bg-slate-200 px-5 py-2 text-xl rounded-md'><FaGooglePlay /> Google Play</button>
+                    <button className='flex items-center gap-1 bg-slate-200 px-5 py-2 text-md rounded-md'><FaAppStoreIos /> App Store</button>
+                    <button className='flex items-center gap-1 bg-slate-200 px-5 py-2 text-md rounded-md'><FaGooglePlay /> Google Play</button>
                 </div>
                 <div className='grid grid-cols-2 gap-5 mt-5'>
                     <div>
@@ -43,11 +43,11 @@ const Page = () => {
                         <h2>Aloqa</h2>
                         <p>+998 (71) 123-45-67</p>
                         <div className='flex flex-wrap gap-2 text-2xl mt-5'>
-                            <button className='bg-slate-200 px-4 py-2 rounded-md'><FaFacebook /></button>
-                            <button className='bg-slate-200 px-4 py-2 rounded-md'><FaYoutube /></button>
-                            <button className='bg-slate-200 px-4 py-2 rounded-md'><FaTelegram /></button>
-                            <button className='bg-slate-200 px-4 py-2 rounded-md'><FaTwitter /></button>
-                            <button className='bg-slate-200 px-4 py-2 rounded-md'><FaInstagram /></button>
+                            <button><FaFacebook /></button>
+                            <button><FaYoutube /></button>
+                            <button><FaTelegram /></button>
+                            <button><FaTwitter /></button>
+                            <button><FaInstagram /></button>
                         </div>
                     </div>
                 </div>
