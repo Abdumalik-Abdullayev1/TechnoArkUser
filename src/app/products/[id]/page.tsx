@@ -32,9 +32,21 @@ const Page = () => {
         <div className='flex'>
           <div className='flex gap-2 w-full xl:w-[80%]'>
             <div className='hidden w-[20%] xl:flex xl:flex-col justify-around gap-1'>
-              <img src={data?.data?.product?.images?.[0]} alt="product-main" className="w-full" />
-              <img src={data?.data?.product?.images?.[0]} alt="product-main" className="w-full" />
-              <img src={data?.data?.product?.images?.[0]} alt="product-main" className="w-full" />
+              {data?.data?.product?.images?.length > 1 ? (
+                <img src={data?.data?.product?.images[1]} alt="product-main" className="w-full" />
+              ) : (
+                <img src={data?.data?.product?.images[0]} alt="product-main" className="w-full" />
+              )}
+              {data?.data?.product?.images?.length > 1 ? (
+                <img src={data?.data?.product?.images[3]} alt="product-main" className="w-full" />
+              ) : (
+                <img src={data?.data?.product?.images[0]} alt="product-main" className="w-full" />
+              )}
+              {data?.data?.product?.images?.length > 1 ? (
+                <img src={data?.data?.product?.images[2]} alt="product-main" className="w-full" />
+              ) : (
+                <img src={data?.data?.product?.images[0]} alt="product-main" className="w-full" />
+              )}
               <img src={data?.data?.product?.images?.[0]} alt="product-main" className="w-full" />
             </div>
             <span className='w-[100%] flex flex-col justify-center items-center xl:w-[80%]'><img src={data?.data?.product?.images?.[0]} alt="product-main" className="xl:w-full md:w-[60%]" /></span>

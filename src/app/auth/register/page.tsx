@@ -128,7 +128,7 @@ const Page = () => {
                 <button className='bg-slate-200 text-blue-700 rounded-md px-8 py-2'>Login orqali</button>
             </div>
             <div className='w-full mt-5 relative'>
-                <div className='w-[40%] h-[90%] bg-white absolute top-0 left-5 my-1 p-1 sm:p-5 xl:my-5'>
+                <div className='w-[40%] h-[75%] bg-white absolute top-20 left-5 my-1 p-1 sm:p-5 xl:my-5'>
                     <div className='lg:flex flex-col gap-1 xl:gap-4'>
                         <h2 className='font-extrabold text-[8px] sm:text-[12px] lg:text-[17px] xl:text-[22px]'>OOO “Ashyo”</h2>
                         <div className='text-[8px] sm:text-[12px] lg:text-[17px] xl:text-[22px]'>
@@ -155,6 +155,14 @@ const Page = () => {
                             </div>
                         </div>
                     </div>
+                </div>
+                <div className="flex justify-center my-10">
+                    <Link
+                        href={"/"}
+                        className="w-[130px] h-[40px] md:w-[170px] flex items-center justify-center bg-blue-800 transition-all hover:bg-blue-500 rounded-md text-white"
+                    >
+                        Go Home
+                    </Link>
                 </div>
                 <Image src={Map} alt='MapImage' width={1500} priority />
             </div>

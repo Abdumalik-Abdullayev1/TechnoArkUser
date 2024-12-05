@@ -94,7 +94,6 @@ const Product = () => {
                                 </div>
                                 <div className="flex gap-1 h-full">
                                     <button className="flex items-center gap-1 bg-blue-800 px-5 py-2 text-white lg:px-10 rounded-md">
-                                        Savatcha
                                         <CgShoppingBag />
                                     </button>
                                 </div>

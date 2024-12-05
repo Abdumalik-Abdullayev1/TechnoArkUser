@@ -31,10 +31,10 @@ const Page = () => {
         <div className="relative ">
             <div className="mt-10 sm:grid sm:grid-flow-col sm:pr-5 sm:items-center xl:px-16">
                 <div className="sm:w-32 md:w-36 lg:w-64 px-5 grid grid-flow-col items-center justify-between">
-                    <div className="flex items-center">
+                    <Link href="/" className="flex items-center">
                         <Image className="lg:w-[100%]" src={Logo} width={50} alt="logo" priority />
                         <h2 className="text-2xl font-black text-blue-800 sm:text-3xl md:text-4xl lg:text-6xl">Ashyo</h2>
-                    </div>
+                    </Link>
                     <p className="sm:hidden">+998 (71) 123-45-67</p>
                     <button className="text-[22px] sm:hidden" onClick={toggleSidebar}>
                         <RxHamburgerMenu />

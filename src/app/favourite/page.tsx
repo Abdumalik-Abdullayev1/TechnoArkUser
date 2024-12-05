@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { ProductData } from "@/types/page";
 import { CgShoppingBag } from 'react-icons/cg';
+import { FcLikePlaceholder, FcLike } from "react-icons/fc";
 import Link from "next/link";
 
 const Page = () => {
@@ -11,11 +12,6 @@ const Page = () => {
 
     useEffect(() => {
         try {
-            const token = localStorage.getItem("token");
-            if (!token) {
-                setError("You need to log in to view your favourite products.");
-                return;
-            }
             const likedProductsData = localStorage.getItem("likedProducts");
             if (!likedProductsData) {
                 setError("Your favorite product has not been identified yet.");
@@ -47,6 +43,18 @@ const Page = () => {
         );
     }
 
+    const toggleLike = async (item: ProductData) => {
+        let updatedLikes: ProductData[];
+        const isLiked = likedProducts.some(product => product.id === item.id);
+        if (isLiked) {
+            updatedLikes = likedProducts.filter(product => product.id !== item.id);
+        } else {
+            updatedLikes = [...likedProducts, item];
+        }
+        setLikedProducts(updatedLikes);
+        localStorage.setItem('likedProducts', JSON.stringify(updatedLikes));
+    };
+
     return (
         <div className="container mt-5 xl:px-20">
             <h1 className="px-10 text-[20px] lg:text-[30px] font-bold mb-5 xl:px-3 xl:text-4xl">Precious Products</h1>
@@ -55,6 +63,12 @@ const Page = () => {
                     <div key={item?.id} className="product-card relative">
                         <div>
                             <div className="relative h-[50vh] bg-slate-200 flex justify-center items-center object-contain rounded-lg">
+                                <button
+                                    onClick={() => toggleLike(item)}
+                                    className="absolute top-5 right-5 text-2xl"
+                                >
+                                    {likedProducts.some(product => product.id === item.id) ? <FcLike /> : <FcLikePlaceholder />}
+                                </button>
                                 <Link href={`/products/${item?.id}`}><img src={item?.images?.[0]} alt="card" className="w-full" /></Link>
                             </div>
                             <p className="text-sm font-bold sm:text-xl mt-2">{item?.name}</p>
@@ -72,6 +86,14 @@ const Page = () => {
                         </div>
                     </div>
                 ))}
+            </div>
+            <div className="flex justify-center mt-10">
+                <Link
+                    href={"/"}
+                    className="w-[130px] h-[40px] md:w-[170px] flex items-center justify-center bg-blue-600 transition-all hover:bg-blue-500 rounded-md text-white"
+                >
+                    Go Home
+                </Link>
             </div>
         </div>
     );

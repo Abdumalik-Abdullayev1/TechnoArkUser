@@ -30,16 +30,13 @@ const Product = () => {
         }
         let updatedLikes: ProductData[];
         const isLiked = likedProducts.some(product => product.id === item.id);
-
         if (isLiked) {
             updatedLikes = likedProducts.filter(product => product.id !== item.id);
         } else {
             updatedLikes = [...likedProducts, item];
         }
-
         setLikedProducts(updatedLikes);
         localStorage.setItem('likedProducts', JSON.stringify(updatedLikes));
-
         try {
             const response = await fetch('https://texnoark.ilyosbekdev.uz/likes/create', {
                 method: 'POST',
@@ -52,13 +49,11 @@ const Product = () => {
                     liked: !isLiked,
                 }),
             });
-            console.log(response, "like resp");
 
             if (!response.ok) {
                 const { message } = await response.json();
                 throw new Error(message || 'Failed to update like');
             }
-
             const likedProducts = JSON.parse(localStorage.getItem('likedProducts') || '[]');
             if (!likedProducts.includes(item.id)) {
                 likedProducts.push(item.id);
@@ -69,6 +64,32 @@ const Product = () => {
             console.error('Error updating like:', error);
         }
     };
+
+    const handleCart = async (item: ProductData) => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            router.push('/auth/login')
+            return;
+        }
+        try {
+            const res = await fetch('https://texnoark.ilyosbekdev.uz/carts/create', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                },
+                body: JSON.stringify({
+                    product_id: item.id,
+                }),
+            })
+            console.log(res, "cart response");
+            
+        } catch (error) {
+            console.error("error");
+
+        }
+
+    }
 
     return (
         <div>
@@ -93,8 +114,9 @@ const Product = () => {
                                     <p className="text-md font-bold sm:text-[18px]">${item?.price}</p>
                                 </div>
                                 <div className="flex gap-1 h-full">
-                                    <button className="flex items-center gap-1 bg-blue-800 px-5 py-2 text-white lg:px-10 rounded-md">
-                                        Savatcha
+                                    <button
+                                        onClick={() => handleCart(item)}
+                                        className="flex items-center gap-1 bg-blue-800 px-5 py-2 text-white lg:px-10 rounded-md">
                                         <CgShoppingBag />
                                     </button>
                                 </div>
