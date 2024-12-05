@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation';
 const Product = () => {
     const { data } = useFetch('https://texnoark.ilyosbekdev.uz/products/search');
     const [likedProducts, setLikedProducts] = useState<ProductData[]>([]);
+    const [cartProducts, setCartProducts] = useState<ProductData[]>([]);
     const router = useRouter()
 
     useEffect(() => {
@@ -71,6 +72,16 @@ const Product = () => {
             router.push('/auth/login')
             return;
         }
+        let updatedCart: ProductData[];
+        const isInCart = cartProducts.some(product => product.id === item.id);
+
+        if (isInCart) {
+            updatedCart = cartProducts.filter(product => product.id !== item.id);
+        } else {
+            updatedCart = [...cartProducts, item];
+        }
+
+        setCartProducts(updatedCart);
         try {
             const res = await fetch('https://texnoark.ilyosbekdev.uz/carts/create', {
                 method: 'POST',
@@ -82,8 +93,10 @@ const Product = () => {
                     product_id: item.id,
                 }),
             })
-            console.log(res, "cart response");
-            
+            if (res.status == 201) {
+
+            }
+
         } catch (error) {
             console.error("error");
 
@@ -98,7 +111,7 @@ const Product = () => {
                 {data?.products?.slice(0, 4).map((item: ProductData) => (
                     <div key={item?.id} className="product-card relative">
                         <div>
-                            <div className="relative h-[50vh] bg-slate-200 flex justify-center items-center object-contain rounded-lg">
+                            <div className="relative h-[45vh] bg-slate-200 flex justify-center items-center object-contain rounded-lg">
                                 <button
                                     onClick={() => toggleLike(item)}
                                     className="absolute top-5 right-5 text-2xl"
@@ -113,12 +126,20 @@ const Product = () => {
                                 <div className="flex justify-between pr-5 items-center py-3 xl:flex-col xl:items-start xl:w-full">
                                     <p className="text-md font-bold sm:text-[18px]">${item?.price}</p>
                                 </div>
-                                <div className="flex gap-1 h-full">
+                                <div className="flex items-center gap-1 h-full">
+                                    {cartProducts.some(product => product.id === item.id) ? 
+                                    <button
+                                        onClick={() => handleCart(item)}
+                                        className="flex items-center gap-1 bg-white px-5 py-1 text-black border border-black lg:px-5 rounded-md">
+                                        <span>Added</span>
+                                        <CgShoppingBag />
+                                    </button> : 
                                     <button
                                         onClick={() => handleCart(item)}
                                         className="flex items-center gap-1 bg-blue-800 px-5 py-2 text-white lg:px-10 rounded-md">
                                         <CgShoppingBag />
-                                    </button>
+                                    </button>}
+
                                 </div>
                             </div>
                         </div>

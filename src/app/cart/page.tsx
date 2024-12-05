@@ -3,6 +3,8 @@ import { ProductData } from "@/types/page"
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { FcLikePlaceholder, FcLike } from "react-icons/fc"
+import { FaTrashCan } from "react-icons/fa6";
 
 interface Product extends ProductData {
   product_id: ProductData
@@ -15,6 +17,7 @@ const Page = () => {
   const [showModal, setShowModal] = useState(false);
   const [productToDelete, setProductToDelete] = useState<Product | null>(null);
   const [isClient, setIsClient] = useState(false);
+  const [liked, setLiked] = useState(false)
 
   const getCart = async () => {
     const user_id = localStorage.getItem('userId');
@@ -71,6 +74,10 @@ const Page = () => {
     }
   };
 
+  const toggleLike = () => {
+    setLiked(prevLiked => !prevLiked)
+  }
+
   const openModal = (product: Product) => {
     setProductToDelete(product);
     setShowModal(true);
@@ -95,49 +102,54 @@ const Page = () => {
 
   return (
     <div>
-      <div className="container mt-5">
-        <h1 className="text-[20px] lg:text-[30px] font-bold mb-5">Your Baskets:</h1>
+      <h1 className="text-[20px] lg:text-[30px] font-bold mb-5">Your Baskets:</h1>
+      <div className="container mt-5 2xl:px-28 flex justify-between items-start">
         <div className="flex flex-col gap-5">
           {basketProducts.map((product) => (
-            <div key={product.id} className="flex flex-col gap-4 items-center justify-between border-b pb-4 md:flex-row">
-              <div className="flex items-center gap-6">
+            <div key={product.id} className="flex gap-4 items-center border-b">
+              <div className="flex items-start gap-2">
                 <Image
                   src={product?.product_id?.images?.[0]}
                   alt={product.name || 'Product Image'}
-                  width={100}
-                  height={100}
-                  className="rounded-md"
+                  width={200}
+                  height={200}
+                  className="rounded-md bg-slate-200"
                 />
-                <div className='flex flex-col gap-2'>
-                  <h2 className="font-bold text-lg">{product.product_id?.name}</h2>
-                  <p className="text-gray-600">{Number(product.product_id?.price).toLocaleString()} uzs</p>
-                  <button
-                    className="bg-gray-200 w-[40px] h-[40px] rounded-md hover:bg-gray-300"
-                    onClick={() => openModal(product)}
-                  >
-                    <i className="fa-solid fa-trash"></i>
-                  </button>
+                <div className="flex flex-col justify-between w-full h-[25vh]">
+                  <div className='flex justify-between gap-2 w-full'>
+                    <h2 className="font-bold text-lg 2xl:text-4xl">{product.product_id?.name}</h2>
+                    <p className="text-gray-600 2xl:text-4xl">{Number(product.product_id?.price).toLocaleString()} uzs</p>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <button onClick={toggleLike} className="text-3xl">
+                      {liked ? <FcLike /> : <FcLikePlaceholder />}
+                    </button>
+                    <button
+                      className="text-2xl"
+                      onClick={() => openModal(product)}
+                    >
+                      <FaTrashCan />
+                    </button>
+                    <button
+                      className="bg-gray-200 w-[40px] h-[40px] rounded-md hover:bg-gray-300"
+                      onClick={() => handleQuantityChange(product.price, false)}
+                    >
+                      -
+                    </button>
+                    <span>{quantities[product.price]}</span>
+                    <button
+                      className="bg-gray-200 w-[40px] h-[40px] rounded-md hover:bg-gray-300"
+                      onClick={() => handleQuantityChange(product.brand_id, true)}
+                    >
+                      +
+                    </button>
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-center gap-2">
-                <button
-                  className="bg-gray-200 w-[40px] h-[40px] rounded-md hover:bg-gray-300"
-                  onClick={() => handleQuantityChange(product.price, false)}
-                >
-                  -
-                </button>
-                <span>{quantities[product.price]}</span>
-                <button
-                  className="bg-gray-200 w-[40px] h-[40px] rounded-md hover:bg-gray-300"
-                  onClick={() => handleQuantityChange(product.brand_id, true)}
-                >
-                  +
-                </button>
               </div>
             </div>
           ))}
         </div>
-        <div className="mt-5 bg-gray-100 p-10 rounded-md shadow-md w-full max-w-sm ml-auto">
+        <div className="mt-5 bg-gray-100 p-10 rounded-md shadow-md max-w-lg">
           <h2 className="font-bold text-xl mb-2">Order Summary</h2>
           <p className="text-gray-600">Delivery: <strong>Free</strong></p>
           <p className="text-lg font-bold">Total: {total.toLocaleString()} uzs</p>
