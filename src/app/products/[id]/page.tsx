@@ -1,13 +1,25 @@
 "use client"
+import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { LiaStoreAltSolid } from "react-icons/lia";
 import { PiTruckDuotone, PiClock } from "react-icons/pi";
 import Products from '@/components/home/products'
+import Ellipse from '@/assets/Ellipse.png'
+import Frame from '@/assets/Frame.png'
+
+interface CommentType {
+  comment: string,
+  product_id: number
+}
 
 const Page = () => {
   const { id } = useParams();
   const [data, setData] = useState<any>(null);
+  const [comment, setComment] = useState<string>('');
+  const [user, setUser] = useState<CommentType[]>([]);
+  const [showAllComments, setShowAllComments] = useState(false);
+
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -19,9 +31,57 @@ const Page = () => {
         console.error('Error fetching product:', error);
       }
     };
-
     fetchProduct();
   }, [id]);
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const response = await fetch(`https://texnoark.ilyosbekdev.uz/comment/product/${id}`);
+        const data = await response.json();
+        setUser(data?.data?.comment || []);
+
+      } catch (error) {
+        console.error('Error fetching comments:', error);
+      }
+    };
+    fetchComments();
+  }, [id]);
+  const handleSeeMore = () => {
+    setShowAllComments(!showAllComments);
+  };
+  const handleComment = async () => {
+    if (!comment.trim()) {
+      console.error("Comment cannot be empty");
+      return;
+    }
+
+    try {
+      const res = await fetch('https://texnoark.ilyosbekdev.uz/comment/create', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify({
+          product_id: data?.data?.product?.id,
+          comment: comment,
+        }),
+      });
+
+      if (!res.ok) {
+        const { message } = await res.json();
+        throw new Error(message || 'Failed to post comment');
+      }
+      console.log("Comment successfully submitted");
+      setComment('');
+    } catch (error) {
+      console.error("Error posting comment:", error);
+    }
+  };
+
+  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setComment(event.target.value);
+  };
 
   if (!data) return <div>Loading...</div>;
 
@@ -51,9 +111,21 @@ const Page = () => {
             </div>
             <span className='w-[100%] flex flex-col justify-center items-center xl:w-[80%]'><img src={data?.data?.product?.images?.[0]} alt="product-main" className="xl:w-full md:w-[60%]" /></span>
             <div className='w-[30%] sm:w-[25%] md:w-[18%] flex flex-col gap-1 xl:hidden'>
-              <img src={data?.data?.product?.images?.[0]} alt="product-main" className="w-full" />
-              <img src={data?.data?.product?.images?.[0]} alt="product-main" className="w-full" />
-              <img src={data?.data?.product?.images?.[0]} alt="product-main" className="w-full" />
+              {data?.data?.product?.images?.length > 1 ? (
+                <img src={data?.data?.product?.images[1]} alt="product-main" className="w-full" />
+              ) : (
+                <img src={data?.data?.product?.images[0]} alt="product-main" className="w-full" />
+              )}
+              {data?.data?.product?.images?.length > 1 ? (
+                <img src={data?.data?.product?.images[3]} alt="product-main" className="w-full" />
+              ) : (
+                <img src={data?.data?.product?.images[0]} alt="product-main" className="w-full" />
+              )}
+              {data?.data?.product?.images?.length > 1 ? (
+                <img src={data?.data?.product?.images[2]} alt="product-main" className="w-full" />
+              ) : (
+                <img src={data?.data?.product?.images[0]} alt="product-main" className="w-full" />
+              )}
               <img src={data?.data?.product?.images?.[0]} alt="product-main" className="w-full" />
             </div>
           </div>
@@ -113,6 +185,45 @@ const Page = () => {
               <p className='flex items-center gap-2'><LiaStoreAltSolid />Do’kondi o’zidan olib ketishingiz mumkin</p>
               <p className='flex items-center gap-2'><PiClock />Tahminiy yetkazib berish vaqti 1 kundan 3 kungacha......</p>
             </div>
+          </div>
+        </div>
+        <div>
+          <div className='sm:grid grid-cols-2 gap-1 md:grid-cols-3 lg:grid-cols-4 items-end sm:mt-10'>
+            {user.length > 0 ? (
+              (showAllComments ? user : user.slice(0, 4)).map((comment, index) => (
+                <div key={index} className="xl:my-0 p-2 border border-gray-300 rounded-lg">
+                  <div className='flex gap-1'>
+                    <Image src={Ellipse} width={100} height={100} alt='Ellipse' />
+                    <div className='flex flex-col gap-2 mt-2'>
+                      <span>Evgeniy Viktorovich</span>
+                      <Image src={Frame} width={80} height={50} alt='Frame' />
+                      <p>{comment.comment}</p>
+                    </div>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p>No comments yet.</p>
+            )}
+          </div>
+          <div className='flex justify-center mt-3'>
+            <button
+              className='bg-blue-800 text-white px-5 py-2 rounded-md'
+              onClick={handleSeeMore}
+            >
+              {showAllComments ? 'See less' : 'See more'}
+            </button>
+          </div>
+          <div className='flex flex-col gap-4 my-5 sm:my-3'>
+            <textarea
+              value={comment}
+              onChange={handleChange}
+              placeholder='Mahsulot haqida fikringiz'
+              className='w-full sm:w-[50%] h-[200px] resize-none border border-black rounded-lg p-3 outline-none'>
+            </textarea>
+            <button
+              onClick={handleComment}
+              className='w-full sm:w-[50%] bg-blue-800 hover:bg-blue-500 text-white py-2 rounded-md'>Yuborish</button>
           </div>
         </div>
       </div>

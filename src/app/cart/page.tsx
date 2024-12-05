@@ -69,6 +69,9 @@ const Page = () => {
       const data = await response.json();
       console.log('Product deleted successfully:', data);
       getCart();
+      const cartProducts = JSON.parse(sessionStorage.getItem('cartProducts') || '[]');
+    const updatedCart = cartProducts.filter((product: Product) => JSON.stringify(product.id) == cardId);
+    sessionStorage.setItem('cartProducts', JSON.stringify(updatedCart));
     } catch (error) {
       console.error('Error deleting product:', error);
     }

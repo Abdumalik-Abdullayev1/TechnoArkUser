@@ -21,6 +21,10 @@ const Product = () => {
                 setLikedProducts(JSON.parse(savedLikes));
             }
         }
+        const savedCart = sessionStorage.getItem('cartProducts');
+        if (savedCart) {
+            setCartProducts(JSON.parse(savedCart));
+        }
     }, []);
 
     const toggleLike = async (item: ProductData) => {
@@ -80,8 +84,8 @@ const Product = () => {
         } else {
             updatedCart = [...cartProducts, item];
         }
-
         setCartProducts(updatedCart);
+        sessionStorage.setItem('cartProducts', JSON.stringify(cartProducts))
         try {
             const res = await fetch('https://texnoark.ilyosbekdev.uz/carts/create', {
                 method: 'POST',
@@ -93,8 +97,14 @@ const Product = () => {
                     product_id: item.id,
                 }),
             })
-            if (res.status == 201) {
-
+            if (!res.ok) {
+                const { message } = await res.json();
+                throw new Error(message || 'Failed to update like');
+            }
+            const cartProducts = JSON.parse(sessionStorage.getItem('cartProducts') || '[]');
+            if (!cartProducts.includes(item)) {
+                cartProducts.push(item);
+                sessionStorage.setItem('cartProducts', JSON.stringify(cartProducts));
             }
 
         } catch (error) {
@@ -127,19 +137,19 @@ const Product = () => {
                                     <p className="text-md font-bold sm:text-[18px]">${item?.price}</p>
                                 </div>
                                 <div className="flex items-center gap-1 h-full">
-                                    {cartProducts.some(product => product.id === item.id) ? 
-                                    <button
-                                        onClick={() => handleCart(item)}
-                                        className="flex items-center gap-1 bg-white px-5 py-1 text-black border border-black lg:px-5 rounded-md">
-                                        <span>Added</span>
-                                        <CgShoppingBag />
-                                    </button> : 
-                                    <button
-                                        onClick={() => handleCart(item)}
-                                        className="flex items-center gap-1 bg-blue-800 px-5 py-2 text-white lg:px-10 rounded-md">
-                                        <CgShoppingBag />
-                                    </button>}
-
+                                    {cartProducts.some(product => product.id === item.id) ?
+                                        <button
+                                            onClick={() => handleCart}
+                                            className="flex items-center gap-1 bg-white px-5 py-1 text-black border border-black lg:px-5 rounded-md">
+                                            <Link href='/cart'>
+                                                <span>Added</span>
+                                            </Link>
+                                        </button> :
+                                        <button
+                                            onClick={() => handleCart(item)}
+                                            className="flex items-center gap-1 bg-blue-800 px-5 py-2 text-white lg:px-10 rounded-md">
+                                            <CgShoppingBag />
+                                        </button>}
                                 </div>
                             </div>
                         </div>
@@ -149,7 +159,7 @@ const Product = () => {
             <div className="w-full flex justify-center my-5 xl:hidden">
                 <button className="px-10 py-2 text-blue-700 bg-[rgb(230,238,246)] rounded-md">Ko’proq</button>
             </div>
-        </div>
+        </div >
     );
 };
 
