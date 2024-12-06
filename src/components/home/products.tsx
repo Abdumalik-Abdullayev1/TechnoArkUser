@@ -14,18 +14,41 @@ const Product = () => {
     const router = useRouter()
 
     useEffect(() => {
-        const token = localStorage.getItem('token')
+        const token = localStorage.getItem('token');
         if (token) {
             const savedLikes = localStorage.getItem('likedProducts');
             if (savedLikes) {
-                setLikedProducts(JSON.parse(savedLikes));
+                try {
+                    const parsedLikes = JSON.parse(savedLikes);
+                    if (Array.isArray(parsedLikes)) {
+                        setLikedProducts(parsedLikes);
+                    } else {
+                        setLikedProducts([]);
+                    }
+                } catch (error) {
+                    console.error('Error parsing liked products:', error);
+                    setLikedProducts([]);
+                }
+            } else {
+                setLikedProducts([]);
             }
         }
         const savedCart = sessionStorage.getItem('cartProducts');
         if (savedCart) {
-            setCartProducts(JSON.parse(savedCart));
+            try {
+                const parsedCart = JSON.parse(savedCart);
+                if (Array.isArray(parsedCart)) {
+                    setCartProducts(parsedCart);
+                } else {
+                    setCartProducts([]);
+                }
+            } catch (error) {
+                console.error('Error parsing cart products:', error);
+                setCartProducts([]);
+            }
         }
     }, []);
+    
 
     const toggleLike = async (item: ProductData) => {
         const token = localStorage.getItem('token');
@@ -126,7 +149,7 @@ const Product = () => {
                                     onClick={() => toggleLike(item)}
                                     className="absolute top-5 right-5 text-2xl"
                                 >
-                                    {likedProducts.some(product => product.id === item.id) ? <FcLike /> : <FcLikePlaceholder />}
+                                    {likedProducts?.some(product => product.id == item.id) ? <FcLike /> : <FcLikePlaceholder />}
                                 </button>
                                 <Link href={`/products/${item?.id}`}><img src={item?.images?.[0]} alt="card" className="w-full" /></Link>
                                 <span className="absolute top-2 right-2 sm:text-[22px]">{ }</span>
@@ -137,7 +160,7 @@ const Product = () => {
                                     <p className="text-md font-bold sm:text-[18px]">${item?.price}</p>
                                 </div>
                                 <div className="flex items-center gap-1 h-full">
-                                    {cartProducts.some(product => product.id === item.id) ?
+                                    {cartProducts?.some(product => product.id === item.id) ?
                                         <button
                                             onClick={() => handleCart}
                                             className="flex items-center gap-1 bg-white px-5 py-1 text-black border border-black lg:px-5 rounded-md">

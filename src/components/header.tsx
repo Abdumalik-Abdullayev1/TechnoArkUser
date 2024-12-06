@@ -89,15 +89,15 @@ const Page = () => {
                     </button>
 
                     {isDropdownOpen && (
-                        <div className="absolute w-full flex gap-5 left-3 top-24 md:left-10 md:top-16 lg:w-11/12 xl:left-28 xl:top-20 xl:w-10/12 bg-white rounded-md shadow-lg p-4 z-50">
+                        <div className="absolute w-[93%] flex gap-5 left-3 top-24 sm:top-14 md:w-[90%] md:left-10 md:top-16 lg:w-[95%] xl:left-28 xl:top-20 xl:w-[84%] bg-slate-50 rounded-md shadow-xl p-4 z-50">
                             <ul className="bg-slate-100 w-[40%] md:w-[20%] rounded-md">
                                 {categories?.length > 0 ? (
                                     categories?.map((category, index) => (
-                                        <li key={index} className="p-2 hover:bg-gray-200 rounded-md">
-                                            <button className="active:bg-white" onClick={() => handleSubCategory(category.id)}>
+                                        <button onClick={() => handleSubCategory(category.id)} key={index} className="p-2 hover:bg-gray-200 rounded-md flex flex-col w-full">
+                                            <button>
                                                 {category.name}
                                             </button>
-                                        </li>
+                                        </button>
                                     ))
                                 ) : (
                                     <li>No categories found</li>
