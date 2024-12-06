@@ -12,7 +12,7 @@ const Page = () => {
 
     useEffect(() => {
         try {
-            const likedProductsData = localStorage.getItem("likedProducts");
+            const likedProductsData = sessionStorage.getItem("likedProducts");
             if (!likedProductsData) {
                 setError("Your favorite product has not been identified yet.");
                 return;
@@ -25,7 +25,7 @@ const Page = () => {
             }
         } catch (error) {
             setError("Failed to load liked products!");
-            console.error("Error parsing liked products from localStorage:", error);
+            console.error("Error parsing liked products from sessionStorage:", error);
         }
     }, []);
 
@@ -37,7 +37,7 @@ const Page = () => {
                     href={"/"}
                     className="w-[130px] h-[40px] md:w-[170px] flex items-center justify-center bg-blue-600 transition-all hover:bg-blue-500 rounded-md text-white"
                 >
-                    Go Home
+                    back to home
                 </Link>
             </div>
         );
@@ -52,7 +52,7 @@ const Page = () => {
             updatedLikes = [...likedProducts, item];
         }
         setLikedProducts(updatedLikes);
-        localStorage.setItem('likedProducts', JSON.stringify(updatedLikes));
+        sessionStorage.setItem('likedProducts', JSON.stringify(updatedLikes));
     };
 
     return (

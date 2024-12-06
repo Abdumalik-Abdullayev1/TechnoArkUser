@@ -161,7 +161,7 @@ const Page = () => {
                         href={"/"}
                         className="w-[130px] h-[40px] md:w-[170px] flex items-center justify-center bg-blue-800 transition-all hover:bg-blue-500 rounded-md text-white"
                     >
-                        Go Home
+                        back to home
                     </Link>
                 </div>
                 <Image src={Map} alt='MapImage' width={1500} priority />

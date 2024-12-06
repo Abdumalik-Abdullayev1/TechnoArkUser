@@ -63,7 +63,7 @@ const Page = () => {
         method: 'POST',
         headers: {
           'Content-type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`,
         },
         body: JSON.stringify({
           product_id: data?.data?.product?.id,
@@ -82,7 +82,7 @@ const Page = () => {
     }
   };
   const handleAddToCart = async (item: ProductData) => {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     if (!token) {
       router.push('/auth/login')
       return;
@@ -102,7 +102,7 @@ const Page = () => {
         method: 'POST',
         headers: {
           'Content-type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}`
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`
         },
         body: JSON.stringify({
           product_id: item.id,

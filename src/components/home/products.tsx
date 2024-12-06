@@ -14,9 +14,9 @@ const Product = () => {
     const router = useRouter()
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
+        const token = sessionStorage.getItem('token');
         if (token) {
-            const savedLikes = localStorage.getItem('likedProducts');
+            const savedLikes = sessionStorage.getItem('likedProducts');
             if (savedLikes) {
                 try {
                     const parsedLikes = JSON.parse(savedLikes);
@@ -51,7 +51,7 @@ const Product = () => {
     
 
     const toggleLike = async (item: ProductData) => {
-        const token = localStorage.getItem('token');
+        const token = sessionStorage.getItem('token');
         if (!token) {
             router.push('/auth/login')
             return;
@@ -64,13 +64,13 @@ const Product = () => {
             updatedLikes = [...likedProducts, item];
         }
         setLikedProducts(updatedLikes);
-        localStorage.setItem('likedProducts', JSON.stringify(updatedLikes));
+        sessionStorage.setItem('likedProducts', JSON.stringify(updatedLikes));
         try {
             const response = await fetch('https://texnoark.ilyosbekdev.uz/likes/create', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                    Authorization: `Bearer ${sessionStorage.getItem('token')}`
                 },
                 body: JSON.stringify({
                     product_id: item.id,
@@ -82,10 +82,10 @@ const Product = () => {
                 const { message } = await response.json();
                 throw new Error(message || 'Failed to update like');
             }
-            const likedProducts = JSON.parse(localStorage.getItem('likedProducts') || '[]');
+            const likedProducts = JSON.parse(sessionStorage.getItem('likedProducts') || '[]');
             if (!likedProducts.includes(item.id)) {
                 likedProducts.push(item.id);
-                localStorage.setItem('likedProducts', JSON.stringify(likedProducts));
+                sessionStorage.setItem('likedProducts', JSON.stringify(likedProducts));
             }
             console.log('Like status updated successfully');
         } catch (error) {
@@ -94,7 +94,7 @@ const Product = () => {
     };
 
     const handleCart = async (item: ProductData) => {
-        const token = localStorage.getItem('token');
+        const token = sessionStorage.getItem('token');
         if (!token) {
             router.push('/auth/login')
             return;
@@ -114,7 +114,7 @@ const Product = () => {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json',
-                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                    Authorization: `Bearer ${sessionStorage.getItem('token')}`
                 },
                 body: JSON.stringify({
                     product_id: item.id,
