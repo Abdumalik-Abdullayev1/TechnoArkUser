@@ -125,15 +125,19 @@ const Page = () => {
             </div>
           </div>
         </div>
-      <div className="flex justify-center my-10">
-        <Link
-          href={"/"}
-          className="w-[130px] h-[40px] md:w-[170px] flex items-center justify-center bg-blue-800 transition-all hover:bg-blue-500 rounded-md text-white"
-        >
-          back to home
-        </Link>
-      </div>
-        <Image src={Map} alt='MapImage' width={1500} priority />
+        <div className="flex justify-center my-10">
+          <Link
+            href={"/"}
+            className="w-[130px] h-[40px] md:w-[170px] flex items-center justify-center bg-blue-800 transition-all hover:bg-blue-500 rounded-md text-white"
+          >
+            back to home
+          </Link>
+        </div>
+        <iframe
+          width={1500}
+          height={450}
+          src="https://www.google.com/maps/embed?pb=!1m23!1m8!1m3!1d5992.270615549258!2d69.2930533!3d41.327671!3m2!1i1024!2i768!4f13.1!4m12!3e6!4m4!1s0x38aef4b6039cc475%3A0x6fd3bf1c5533b300!3m2!1d41.3276707!2d69.29305269999999!4m5!1s0x38aef4b6039cc475%3A0x6fd3bf1c5533b300!2sBodomzor%20yo&#39;li%201-tor%20ko&#39;chasi%2072%20%D0%A2%D0%BEshkent%20Toshkent!3m2!1d41.327670999999995!2d69.2930533!5e0!3m2!1sen!2s!4v1733569286954!5m2!1sen!2s">
+        </iframe>
       </div>
     </div>
   )

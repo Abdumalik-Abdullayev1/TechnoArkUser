@@ -131,12 +131,19 @@ const Product = () => {
                                 <p className="text-sm font-bold sm:text-xl mt-2">{item.name}</p>
                                 <div className="xl:flex xl:items-center xl:justify-between">
                                     <p className="text-md font-bold sm:text-[18px]">${item.price}</p>
-                                    <button
-                                        onClick={() => handleCart(item)}
-                                        className="flex items-center gap-1 bg-blue-800 px-5 py-2 text-white lg:px-10 rounded-md"
-                                    >
-                                        <CgShoppingBag />
-                                    </button>
+                                    {cartProducts.some(product => product.id === item.id) ?
+                                        <button
+                                            onClick={() => handleCart}
+                                            className="flex items-center gap-1 bg-white px-5 py-1 text-black border border-black lg:px-5 rounded-md">
+                                            <Link href='/cart'>
+                                                <span>Added</span>
+                                            </Link>
+                                        </button> :
+                                        <button
+                                            onClick={() => handleCart(item)}
+                                            className="flex items-center gap-1 bg-blue-800 px-5 py-2 text-white lg:px-10 rounded-md">
+                                            <CgShoppingBag />
+                                        </button>}
                                 </div>
                             </div>
                         </div>
